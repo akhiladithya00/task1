@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Rooms";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Rooms</h2>
+<style>
+    .button {
+       
+        border: none;
+        color: white;
+        padding: 15px 40px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 24px;
+        margin: 4px 2px;
+        cursor: pointer;
+        //box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        
+    }
+
+    .button2 {
+        background-color: #008CBA;
+    }
+    /* Blue */
+    .button3 {
+        background-color: #f44336;
+    }
+    /* Red */
+    .button4 {
+        background-color: #e7e7e7;
+        color: black;
+    }
+    /* Gray */
+    .button5 {
+        background-color: #555555;
+    }
+    /* Black */
+</style>
+<script src="~/Scripts/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $http,$window) {
+
+        $http.get("getroomslist").then(function (response) {
+            console.log(response.data);
+            $scope.data1 = response.data;
+        })
+
+          $scope.booking = function (roomnumber){
+              alert(roomnumber);
+              $scope.data2 = roomnumber
+
+              $window.location.href=("Roominout?roomnumber=" + $scope.data2);
+           
+           
+             
+              }
+          //function closed  
+  	 });
+  	
+    
+
+
+</script>
+<div ng-app="myApp" ng-controller="myCtrl">
+
+    
+    <div ng-repeat="x in data1">
+      <div class="clearfix" ng-if="$index % 4 == 0"></div>
+        <div class="col-sm-2">
+            <button class="button" style="background-color : {{x.colour}}" ng-click="booking(x.roomnumber)">{{x.roomnumber}}</button>
+        </div>
+        
+
+    </div>
+</div>
+
+
